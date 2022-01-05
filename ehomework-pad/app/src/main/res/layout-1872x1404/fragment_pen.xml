@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50px"
+            android:text="笔触宽度"
+            android:textSize="34px"
+            android:gravity="center"
+            android:layout_marginRight="36px"/>
+
+        <TextView
+            android:id="@+id/tv_weight"
+            android:layout_width="100px"
+            android:layout_height="50px"
+            android:text="1"
+            android:textSize="34px"
+            android:gravity="center_vertical"
+            android:layout_marginRight="36px"/>
+
+        <TextView
+            android:id="@+id/tv_decrease"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:text="-"
+            android:textSize="40px"
+            android:gravity="center"/>
+        
+        <name.wanghwx.ehomework.common.widget.HorizontalSeekBar
+            android:id="@+id/hsb_weight"
+            android:layout_width="576px"
+            android:layout_height="38px"
+            android:thumb="@drawable/seek_bar_thumb"
+            android:progressDrawable="@drawable/seek_bar_progress"
+            android:layout_marginLeft="36px"
+            android:layout_marginRight="36px"
+            android:max="20"
+            android:progress="1"/>
+
+        <TextView
+            android:id="@+id/tv_increase"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:text="+"
+            android:textSize="40px"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/ll_menu"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:baselineAligned="false"
+        android:paddingStart="92dp"
+        android:paddingEnd="92dp">
+
+        <RelativeLayout
+            android:id="@+id/rl_material"
+            android:layout_width="0dp"
+            android:layout_height="67dp"
+            android:layout_weight="1"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/material"
+                android:textSize="24sp"
+                android:textColor="@color/dark1"
+                android:layout_centerInParent="true"/>
+
+            <View
+                android:id="@+id/v_selector"
+                android:layout_width="67dp"
+                android:layout_height="4dp"
+                android:background="@color/dark1"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_homework"
+            android:layout_width="0dp"
+            android:layout_height="67dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/homework"
+                android:textSize="24sp"
+                android:textColor="@color/dark1"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_test"
+            android:layout_width="0dp"
+            android:layout_height="67dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/test"
+                android:textSize="24sp"
+                android:textColor="@color/dark1"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <name.wanghwx.ehomework.common.widget.DrawableTextView
+            android:id="@+id/dtv_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="180dp"
+            android:drawableTop="@mipmap/empty"
+            android:gravity="center"
+            android:text="@string/empty"
+            android:textSize="22sp"
+            android:textColor="@color/dark6"
+            app:drawable_height="210dp"
+            app:drawable_width="180dp"
+            android:drawablePadding="32dp"/>
+        <RelativeLayout
+            android:id="@+id/rl_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_homework"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/bg_top">
+                <TextView
+                    android:id="@+id/tv_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="23sp"
+                    android:textColor="@color/dark3"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/icon_previous"
+                        android:text="@string/icon_previous"
+                        style="@style/icon.s.page"/>
+                    <TextView
+                        android:id="@+id/tv_page"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="23sp"
+                        android:textColor="@color/dark3"
+                        android:layout_marginStart="72dp"
+                        android:layout_marginEnd="72dp"/>
+                    <TextView
+                        android:id="@+id/icon_next"
+                        android:text="@string/icon_next"
+                        style="@style/icon.s.page"/>
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

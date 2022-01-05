@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <link rel="stylesheet" type="text/css" href="./iconfont.css"/>
+        <script type="text/javascript" async src="./MathJax/MathJax.js?config=TeX-AMS_CHTML"></script>
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            body{
+                font-size: 20px;
+            }
+            .question{
+                display: flex;
+            }
+            .number{
+                width: 30px;
+                text-align: center;
+                flex-shrink: 0;
+            }
+            .stem p{
+                text-indent: 0 !important;
+            }
+            .container{
+                display: inline-block;
+            }
+            .content{
+                width: 0;
+                flex-grow: 1;
+            }
+            .option{
+                display: inline-block;
+                position: relative;
+            }
+            .resize{
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: -10000;
+                overflow: hidden;
+                visibility: hidden;
+            }
+            .smooth{
+                transition: 0s;
+                animation: none;
+            }
+            .tab{
+                flex-shrink: 0;
+                width: 58px;
+                height: 28px;
+                line-height: 28px;
+                text-align: center;
+                border: 1px solid #999999;
+                position: relative;
+            }
+            .chart{
+                display: none;
+                position: absolute;
+                top: -1px;
+                right: 59px;
+                background: #ffffff;
+            }
+            .right,.half-right,.wrong{
+                font-family: iconfont;
+                font-size: 30px;
+                margin-left: 10px;
+            }
+            .right::before{
+                content: "\e694";
+            }
+            .half-right::before{
+                content: "\e695";
+            }
+            .wrong::before{
+                content: "\e693";
+            }
+            .choice{
+                display: inline-block;
+                width: 58px;
+                height: 28px;
+                line-height: 28px;
+                text-align: center;
+                border: 1px solid #999999;
+                float: left;
+            }
+            .selected{
+                background: #666666;
+            }
+            .label{
+                display: inline-block;
+                width: 45px;
+                height: 32px;
+                line-height: 32px;
+                text-align: center;
+            }
+            .answer{
+                background: #999999;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            const HOMEWORK_UNSUBMITTED = 1,HOMEWORK_UNCORRECTED = 2,HOMEWORK_CORRECTED = 3;
+            const QUESTION_SINGLE = 1,QUESTION_MULTIPLE = 2,QUESTION_GENERAL = 3;
+            const COLUMN = [1,2,4].sort();
+            let dismissTimer;
+            let passiveEvents = false;
+            try{
+                let opts = Object.defineProperty({}, 'passive', {
+                    get: function () {
+                        passiveEvents = { passive: true }
+                    }
+                })
+                window.addEventListener('test', null, opts)
+            }catch(e){}
+            function render(encodedJson){
+                let displayItem = JSON.parse(decodeURIComponent(encodedJson));
+                let itemDiv = document.createElement("div");
+                document.body.appendChild(itemDiv);
+                setOnResize(itemDiv,()=>{
+                    window.item.heightChange(itemDiv.offsetHeight);
+                });
+                let status = displayItem.homeworkStatus;
+                let title = displayItem.title;
+                if(validate(title)){
+                    let titleDiv = document.createElement("div");
+                    titleDiv.innerHTML = title;
+                    itemDiv.appendChild(titleDiv);
+                }
+                let questions = displayItem.questions;
+                if(validate(questions)){
+                    let questionsDiv = document.createElement("div");
+                    itemDiv.appendChild(questionsDiv);
+                    for(let i=0,ql=questions.length;i<ql;i++){
+                        let question = questions[i];
+                        if(validate(question)){
+                            let questionDiv = document.createElement("div");
+                            questionDiv.classList.add("question");
+                            questionsDiv.appendChild(questionDiv);
+                            let stem = question.stem;
+                            let numberDiv = document.createElement("div");
+                            numberDiv.classList.add("number");
+                            let number = question.number;
+                            numberDiv.innerHTML = validate(number)?number+".":i+1+".";
+                            questionDiv.appendChild(numberDiv);
+                            let contentDiv = document.createElement("div");
+                            contentDiv.classList.add("content");
+                            questionDiv.appendChild(contentDiv);
+                            if(validate(stem)){
+                                let stemDiv = document.createElement("div");
+                                stemDiv.classList.add("stem");
+                                stemDiv.innerHTML = stem;
+                                contentDiv.appendChild(stemDiv);
+                            }
+                            let type = question.type;
+                            let options = question.options;
+                            if([QUESTION_SINGLE,QUESTION_MULTIPLE].includes(type) && validate(options)){
+                                let choiceTab = document.createElement("div");
+                                choiceTab.classList.add("tab");
+                                let ol = options.length;
+                                let solution = question.solution;
+                                let choice = question.choice;
+                                let textNode;
+                                let choiceChart;
+                                if(status == HOMEWORK_UNSUBMITTED){
+                                    textNode = document.createTextNode(validate(choice)?choice:"选择");
+                                    choiceTab.appendChild(textNode);
+                                    questionDiv.appendChild(choiceTab);
+                                    choiceChart = document.createElement("div");
+                                    choiceChart.setAttribute("class","chart");
+                                    choiceChart.style.width = 60*ol+"px";
+                                    choiceTab.appendChild(choiceChart);
+                                    choiceTab.onclick = event=>{
+                                        if(dismissTimer) clearTimeout(dismissTimer);
+                                        if(getComputedStyle(choiceChart).display == "none"){
+                                            document.querySelectorAll(".chart").forEach(choiceChart=>choiceChart.style.display = "none");
+                                            choiceChart.style.display = "inline-block";
+                                            dismissTimer = setTimeout(()=>{
+                                                choiceChart.style.display = "none";
+                                                clearTimeout(dismissTimer);
+                                            },2000);
+                                        }else{
+                                            choiceChart.style.display = "none";
+                                        }
+                                    }
+                                }else{
+                                    textNode = document.createTextNode(validate(choice)?choice:"未选");
+                                    choiceTab.appendChild(textNode);
+                                    questionDiv.appendChild(choiceTab);
+                                    let resultIcon = document.createElement("span");
+                                    let result = calculateResult(solution,choice);
+                                    if(result == 1){
+                                        resultIcon.classList.add("right");
+                                    }else if(result == 0){
+                                        resultIcon.classList.add("half-right");
+                                    }else{
+                                        resultIcon.classList.add("wrong");
+                                    }
+                                    questionDiv.appendChild(resultIcon);
+                                }
+                                let optionsDiv = document.createElement("div");
+                                contentDiv.appendChild(optionsDiv);
+                                question.maxWidth = 0;
+                                for(let j=0;j<ol;j++){
+                                    let option = options[j];
+                                    if(validate(option)){
+                                        let label = option.label;
+                                        if(status == HOMEWORK_UNSUBMITTED){
+                                            let choiceDiv = document.createElement("div");
+                                            choiceDiv.classList.add("choice");
+                                            if(validate(choice) && choice.includes(label)){
+                                                choiceDiv.classList.add("selected");
+                                            }
+                                            choiceDiv.innerText = option.label;
+                                            choiceChart.appendChild(choiceDiv);
+                                            if(type == QUESTION_SINGLE){
+                                                choiceDiv.onclick = event=>{
+                                                    if(choiceDiv.classList.contains("selected")){
+                                                        choiceDiv.classList.remove("selected");
+                                                    }else{
+                                                        choiceChart.childNodes.forEach(choiceDiv=>choiceDiv.classList.remove("selected"));
+                                                        choiceDiv.classList.add("selected");
+                                                    }
+                                                    question.choice = "";
+                                                    choiceChart.childNodes.forEach(choiceDiv=>{
+                                                        if(choiceDiv.classList.contains("selected")){
+                                                            question.choice += choiceDiv.innerText;
+                                                        }
+                                                    });
+                                                    choice = question.choice;
+                                                    textNode.nodeValue = validate(choice)?choice:"选择";
+                                                    window.item.choiceChange(i,choice);
+                                                    event.stopPropagation();
+                                                }
+                                            }
+                                            if(type == QUESTION_MULTIPLE){
+                                                choiceDiv.onclick = event=>{
+                                                    if(choiceDiv.classList.contains("selected")){
+                                                        choiceDiv.classList.remove("selected");
+                                                    }else{
+                                                        choiceDiv.classList.add("selected");
+                                                    }
+                                                    question.choice = "";
+                                                    choiceChart.childNodes.forEach(choiceDiv=>{
+                                                        if(choiceDiv.classList.contains("selected")){
+                                                            question.choice += choiceDiv.innerText;
+                                                        }
+                                                    });
+                                                    choice = question.choice;
+                                                    textNode.nodeValue = validate(choice)?choice:"选择";
+                                                    window.item.choiceChange(i,choice);
+                                                    event.stopPropagation();
+                                                }
+                                            }
+                                        }
+                                        let containerDiv = document.createElement("div");
+                                        containerDiv.classList.add("container");
+                                        optionsDiv.appendChild(containerDiv);
+                                        let optionDiv = document.createElement("div");
+                                        optionDiv.classList.add("option");
+                                        containerDiv.appendChild(optionDiv);
+                                        let labelDiv = document.createElement("div");
+                                        labelDiv.classList.add("label");
+                                        if(status != HOMEWORK_UNSUBMITTED && validate(solution) && solution.indexOf(label) != -1) labelDiv.classList.add("answer");
+                                        labelDiv.innerText = label;
+                                        optionDiv.appendChild(labelDiv);
+                                        let contentSpan = document.createElement("span");
+                                        contentSpan.innerHTML = option.content;
+                                        optionDiv.appendChild(contentSpan);
+                                        let width = optionDiv.offsetWidth;
+                                        if(width > question.maxWidth) question.maxWidth = width;
+                                        setOnResize(optionDiv,()=>{
+                                            let width = optionDiv.offsetWidth;
+                                            if(width > question.maxWidth) question.maxWidth = width;
+                                            let fullWidth = contentDiv.clientWidth;
+                                            let column = getColumn(fullWidth/question.maxWidth);
+                                            optionsDiv.childNodes.forEach(containerDiv=>containerDiv.style.width=fullWidth/column+"px");
+                                        });
+                                    }
+                                }
+                                let fullWidth = contentDiv.clientWidth;
+                                let column = getColumn(fullWidth/question.maxWidth);
+                                optionsDiv.childNodes.forEach(containerDiv=>{
+                                    containerDiv.style.width=fullWidth/column+"px";
+                                });
+                                document.body.onclick = ()=>window.item.click();
+                            }
+                        }
+                    }
+                }
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+            }
+            function validate(value){
+                if(value&&value!=null&&value!=""){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+            function calculateResult(solution,choice){
+                if(validate(solution) && validate(choice)){
+                    if(solution == choice){
+                        return 1;
+                    }else{
+                        for(let i=0,l=choice.length;i<l;i++){
+                            if(solution.indexOf(choice.charAt(i) == -1)){
+                                return -1;
+                            }
+                        }
+                        return 0;
+                    }
+                }else{
+                    return -1;
+                }
+            }
+            function getColumn(quotient){
+                for(let i=0,length=COLUMN.length;i<length;i++){
+                    if(COLUMN[i]<=quotient&&(i==length-1||COLUMN[i+1]>quotient)){
+                        return COLUMN[i];
+                    }
+                }
+            }
+            function setOnResize(element,onResize){
+                if(element instanceof HTMLElement && typeof onResize === "function"){
+                    if(/^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr|script|style|textarea|title)$/i.test(element.tagName)){
+                        throw new TypeError('Unsupported tag type. Change the tag or wrap it in a supported tag(e.g. div).');
+                    }else{
+                        let width = element.offsetWidth||1;
+                        let height = element.offsetHeight||1;
+                        let maxWidth = 10000*width;
+                        let maxHeight = 10000*height;
+                        let expandDiv = document.createElement("div");
+                        expandDiv.setAttribute("class","resize");
+                        let shrinkDiv = expandDiv.cloneNode(false);
+                        let expand = document.createElement("div");
+                        expand.setAttribute("class","smooth");
+                        let shrink = expand.cloneNode(false);
+                        expand.style.width = maxWidth+"px";
+                        expand.style.height = maxHeight+"px";
+                        shrink.style.width = "250%";
+                        shrink.style.height = "250%";
+                        expandDiv.appendChild(expand);
+                        shrinkDiv.appendChild(shrink);
+                        element.appendChild(expandDiv);
+                        element.appendChild(shrinkDiv);
+                        if(expandDiv.offsetParent !== element){
+                            element.style.position = "relative";
+                        }
+                        expandDiv.scrollLeft = shrinkDiv.scrollLeft = maxWidth;
+                        expandDiv.scrollTop = shrinkDiv.scrollTop = maxHeight;
+                        let newWidth = 0;
+                        let newHeight = 0;
+                        function onScroll(){
+                            newWidth = element.offsetWidth||1;
+                            newHeight = element.offsetHeight||1;
+                            if(newWidth !== width || newHeight !== height){
+                                requestAnimationFrame(()=>{
+                                    if(newWidth !== width || newHeight !== height){
+                                        width = newWidth;
+                                        height = newHeight;
+                                        onResize();
+                                    }
+                                });
+                                expandDiv.scrollLeft = shrinkDiv.scrollLeft = maxWidth;
+                                expandDiv.scrollTop = shrinkDiv.scrollTop = maxHeight;
+                            }
+                        }
+                        expandDiv.addEventListener('scroll',onScroll,passiveEvents);
+                        shrinkDiv.addEventListener('scroll',onScroll,passiveEvents);
+                    }
+                }else{
+                    throw new TypeError("element must be a HTMLElement and onResize must be a function");
+                }
+            }
+        </script>
+    </body>
+</html>

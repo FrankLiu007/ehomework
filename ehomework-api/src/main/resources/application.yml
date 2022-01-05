@@ -1,0 +1,60 @@
+server:
+  port: 7001
+
+spring:
+  datasource:
+    username: *
+    password: *
+    url: jdbc:mysql://*.*.*.*:3306/ehomework?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      initial-size: 5
+      max-active: 20
+      min-idle: 1
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: select 'x'
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      filters: stat
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: admin
+        login-password: 123456
+        allow: /
+        deny:
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: /druid/*,*.css,*.js
+
+logging:
+  level:
+    com.zxrh.ehomework.mapper: debug
+        
+mybatis:
+  type-handlers-package: com.zxrh.ehomework.common.typehandler
+  configuration:
+    map-underscore-to-camel-case: true
+    
+properties:
+  shiro:
+    public-urls:
+    - /**/login
+    - /admin/index/**
+    - /webjars/**
+    - /css/**/*.css
+    - /img/**/*.png
+    - /js/**/*.js
+    - /other/**
+    - /favicon.ico
+  oss:
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+    access-key-id: *
+    access-key-secret: *
+    bucket-name: ehomework

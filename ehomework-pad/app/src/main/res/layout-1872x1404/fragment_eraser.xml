@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_mode"
+            style="@style/text"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/mode"
+            android:textSize="22sp"
+            android:textColor="@color/dark1"
+            android:layout_marginEnd="120dp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_move"
+            android:layout_width="160dp"
+            android:layout_height="64dp"
+            android:orientation="horizontal"
+            android:layout_toEndOf="@id/tv_mode"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="40dp"
+            android:gravity="center"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/icon_move"
+                style="@style/icon.s"
+                android:textColor="@color/dark1"
+                android:background="@drawable/bg_move_erase"/>
+            <TextView
+                style="@style/text"
+                android:text="@string/move_erase"
+                android:textSize="22sp"
+                android:textColor="@color/dark1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_stroke"
+            android:layout_width="160dp"
+            android:layout_height="64dp"
+            android:layout_toEndOf="@id/ll_move"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="40dp"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/icon_stroke"
+                style="@style/icon.s"
+                android:text="@string/icon_stroke"
+                android:textColor="@color/dark1"/>
+            <TextView
+                style="@style/text"
+                android:text="@string/stroke_erase"
+                android:textSize="22sp"
+                android:textColor="@color/dark1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_lasso"
+            android:layout_width="128dp"
+            android:layout_height="64dp"
+            android:layout_toEndOf="@id/ll_stroke"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/icon_lasso"
+                style="@style/icon.s"
+                android:text="@string/icon_lasso"
+                android:textColor="@color/dark1"/>
+            <TextView
+                style="@style/text"
+                android:text="@string/lasso"
+                android:textSize="23sp"
+                android:textColor="@color/dark1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_clear"
+            android:layout_width="160dp"
+            android:layout_height="64dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/icon_clear"
+                style="@style/icon.s"
+                android:text="@string/icon_recycle"
+                android:textColor="@color/dark1"/>
+            <TextView
+                style="@style/text"
+                android:text="@string/clear"
+                android:textSize="23sp"
+                android:textColor="@color/dark1"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/text"
+            android:text="@string/eraser_width"
+            android:textSize="22sp"
+            android:textColor="@color/dark1"
+            android:layout_marginEnd="24dp"/>
+
+        <TextView
+            android:id="@+id/tv_width"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:text="@string/integer"
+            android:textSize="22sp"
+            android:textColor="@color/dark1"
+            android:gravity="center"
+            android:layout_marginEnd="24dp"/>
+
+        <TextView
+            android:id="@+id/tv_decrease"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="@string/minus"
+            android:textSize="30sp"
+            android:textColor="@color/dark1"
+            android:gravity="center"/>
+
+        <name.wanghwx.ehomework.common.widget.HorizontalSeekBar
+            android:id="@+id/hsb_width"
+            android:layout_width="384dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:progressDrawable="@drawable/seek_bar_progress"
+            android:thumb="@drawable/seek_bar_thumb"
+            android:max="@integer/max_eraser_width"
+            android:progress="@integer/default_eraser_width"/>
+
+        <TextView
+            android:id="@+id/tv_increase"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="@string/plus"
+            android:textSize="30sp"
+            android:textColor="@color/dark1"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>

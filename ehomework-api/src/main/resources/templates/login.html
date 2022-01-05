@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" th:href="@{/css/login.css}"></link>
+		<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+	</head>
+	<body>
+		<img class="illustration" th:src=@{/img/p1.png}/>
+		<form class="form" method="post" th:action=@{/admin/login}>
+			<div class="title">后台管理登录</div>
+			<div class="input">
+				<span class="iconfont icon">&#xe6aa;</span>
+				<input type="text" id="account" name="account" placeholder="请输入账号"/>
+			</div>
+			<div class="input">
+				<span class="iconfont icon">&#xe6a9;</span>
+				<input type="password" id="password" name="password" placeholder="请输入密码"/>
+			</div>
+			<div class="input">
+				<span class="iconfont icon">&#xe6ab;</span>
+			</div>
+			<button class="submit" type="submit">登录</button>
+		</form>
+	</body>
+</html>

@@ -1,0 +1,134 @@
+<resources>
+    <string name="app_name">小象作业</string>
+    <string name="account_hint">请输入账号</string>
+    <string name="password_hint">请输入密码</string>
+    <string name="login">登录</string>
+
+    <string name="answer_board">答题板</string>
+    <string name="draft_board">草稿板</string>
+    <string name="show_reference">查看答案</string>
+    <string name="hide_reference">关闭答案</string>
+
+    <string name="icon_homework">&#xe6a8;</string>
+    <string name="icon_test">&#xe6a6;</string>
+    <string name="icon_course">&#xe6a9;</string>
+    <string name="icon_mistake_book">&#xe6aa;</string>
+    <string name="icon_me">&#xe6b9;</string>
+
+    <string name="icon_refresh">&#xe6b3;</string>
+
+    <string name="icon_course_s">&#xe65b;</string>
+    <string name="icon_clock_s">&#xe663;</string>
+    <string name="icon_remark_s">&#xe661;</string>
+    <string name="icon_score_s">&#xe677;</string>
+
+    <string name="icon_remind">&#xe6ab;</string>
+    <string name="icon_up">&#xe657;</string>
+    <string name="icon_down">&#xe660;</string>
+    <string name="icon_left">&#xe67e;</string>
+    <string name="icon_right">&#xe67f;</string>
+    <string name="icon_previous">&#xe659;</string>
+    <string name="icon_next">&#xe65c;</string>
+    <string name="icon_status">&#xe662;</string>
+
+    <string name="icon_backward">&#xe66b;</string>
+    <string name="icon_pen">&#xe6be;</string>
+    <string name="icon_eraser">&#xe678;</string>
+    <string name="icon_collected">&#xe697;</string>
+    <string name="icon_uncollected">&#xe699;</string>
+    <string name="icon_submit">&#xe6b2;</string>
+    <string name="icon_toggle">&#xe6af;</string>
+    <string name="icon_fullscreen_enter">&#xe66a;</string>
+    <string name="icon_fullscreen_exit">&#xe676;</string>
+    <string name="icon_undo">&#xe6b0;</string>
+    <string name="icon_redo">&#xe6b1;</string>
+
+    <string name="icon_draft">&#xe66f;</string>
+    <string name="icon_answer">&#xe672;</string>
+    <string name="icon_selector_up">&#xe67b;</string>
+    <string name="icon_selector_down">&#xe67d;</string>
+    <string name="icon_selector_left">&#xe65a;</string>
+    <string name="icon_selector_right">&#xe67c;</string>
+    <string name="icon_stroke">&#xe6be;</string>
+    <string name="icon_lasso">&#xe67a;</string>
+    <string name="icon_recycle">&#xe675;</string>
+
+    <string name="icon_screen">&#xe679;</string>
+    <string name="icon_solution">&#xe66c;</string>
+    <string name="icon_audio">&#xe674;</string>
+    <string name="icon_comment">&#xe664;</string>
+    <string name="icon_user">&#xe65d;</string>
+    <string name="icon_lock">&#xe65f;</string>
+    <string name="icon_eye_open">&#xe667;</string>
+    <string name="icon_eye_close">&#xe65e;</string>
+    <string name="icon_voice">&#xe69a;</string>
+    <string name="icon_logout">&#xe6ac;</string>
+
+    <string name="null_data">查询数据为空</string>
+
+    <string name="homework">作业</string>
+    <string name="test">考试</string>
+    <string name="course">课程</string>
+    <string name="mistake_book">错题本</string>
+    <string name="me">我的</string>
+
+    <string name="empty">空空如也~</string>
+    <string name="total">总计：%d</string>
+    <string name="page">%d/%d</string>
+    <string name="percent">%d%%</string>
+    <string name="decimal">%.1f</string>
+
+    <string name="title">(%s%tm/%td)%s</string>
+    <string name="deadline">截止时间</string>
+    <string name="submittedAt">提交时间</string>
+    <string name="correctedAt">批改时间</string>
+    <string name="remark">备注</string>
+    <string name="write">写作业</string>
+    <string name="check">查看</string>
+    <string name="score">得分</string>
+    <string name="accuracy">正确率</string>
+    <string name="score_value">%.1f</string>
+    <string name="item">%1$d/%2$d</string>
+    <string name="mode">模式</string>
+    <string name="pen_width">笔触宽度</string>
+    <string name="eraser_width">橡皮宽度</string>
+    <string name="move_erase">移动擦除</string>
+    <string name="stroke_erase">笔画擦除</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="lasso">框选</string>
+    <string name="clear">一键清空</string>
+    <string name="material">资料</string>
+    <string name="confirm_submit0">确定要提交吗？</string>
+    <string name="confirm_submit">您还有%1$d题未做完，确定要提交吗？</string>
+    <string name="confirm_wrong">提交成功！检查到客观题中一共有%d道错误，是否前往查看？</string>
+    <string name="loading">加载中&#8230;</string>
+    <string name="answer">作答内容</string>
+    <string name="integer">%d</string>
+    <string name="no_comment">无评语哦~</string>
+    <string name="no_audio">无留言哦~</string>
+    <string name="duration_second">%1$d″</string>
+
+    <string name="icon_chinese">&#xe6b7;</string>
+    <string name="icon_maths">&#xe6b6;</string>
+    <string name="icon_english">&#xe6b8;</string>
+    <string name="icon_politics">&#xe6ba;</string>
+    <string name="icon_history">&#xe6bd;</string>
+    <string name="icon_geography">&#xe6bb;</string>
+    <string name="icon_physics">&#xe6b4;</string>
+    <string name="icon_chemistry">&#xe6b5;</string>
+    <string name="icon_biology">&#xe6bc;</string>
+    <string-array name="subjects">
+        <item>全部</item>
+        <item>语文</item>
+        <item>数学</item>
+        <item>英语</item>
+        <item>政治</item>
+        <item>历史</item>
+        <item>地理</item>
+        <item>物理</item>
+        <item>化学</item>
+        <item>生物</item>
+    </string-array>
+
+</resources>

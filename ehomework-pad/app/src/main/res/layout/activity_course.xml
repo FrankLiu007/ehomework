@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/rg_course"
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <RadioButton
+            android:id="@+id/rb_material"
+            android:text="资料"
+            style="@style/radio.course"
+            android:layout_marginRight="275px"/>
+        <RadioButton
+            android:id="@+id/rb_homework"
+            android:text="作业"
+            style="@style/radio.course"/>
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/fl_display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

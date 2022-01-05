@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_marginTop="75px"
+    android:layout_marginLeft="50px"
+    android:layout_marginRight="50px">
+
+    <ImageView
+        android:id="@+id/iv_cover"
+        android:layout_width="300px"
+        android:layout_height="420px"
+        android:src="@mipmap/chinese"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="768画室语文课"
+        android:textSize="34px"
+        android:textColor="@color/dark1"
+        android:layout_marginTop="23px"/>
+
+</LinearLayout>

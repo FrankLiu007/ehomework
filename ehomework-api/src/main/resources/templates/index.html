@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" th:href="@{/css/index.css}"></link>
+		<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+		<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+		<script th:src="@{/webjars/jquery-cookie/1.4.1-1/jquery.cookie.js}"></script>
+		<script th:inline="javascript">
+			var TOKEN = "token",TOKEN_KEY = "Authentication";
+			var token = [[${token}]],menu = [[${menu}]],baseUrl = [[@{/admin}]];
+			if(token) $.cookie(TOKEN,token);
+		</script>
+		<script th:src="@{/js/index.js}"></script>
+	</head>
+	<body>
+		<div class="side">
+			<img th:src="@{/img/p2.png}"/>
+			<ul>
+				<li class="menu" th:classappend="${menu}=='admin'?'selected':''">
+					<a th:href="@{/admin/index/admin}"><span class="iconfont">&#xe6a6;</span>管理员</a>
+				</li>
+				<li class="menu" th:classappend="${menu}=='teacher'?'selected':''">
+					<a th:href="@{/admin/index/teacher}"><span class="iconfont">&#xe6a2;</span>教师</a>
+				</li>
+				<li class="menu" th:classappend="${menu}=='student'?'selected':''">
+					<a th:href="@{/admin/index/student}"><span class="iconfont">&#xe69b;</span>学生</a>
+				</li>
+				<li class="menu" th:classappend="${menu}=='course'?'selected':''">
+					<a th:href="@{/admin/index/course}"><span class="iconfont">&#xe6a5;</span>课程</a>
+				</li>
+				<li class="menu" th:classappend="${menu}=='material'?'selected':''">
+					<a th:href="@{/admin/index/material}"><span class="iconfont">&#xe69e;</span>资料</a>
+				</li>
+			</ul>
+		</div>
+		<div class="main">
+			<div class="top">
+				<span class="title">后台管理系统</span>
+			</div>
+			<div class="container">
+				<div class="content">
+					<div th:if="${menu}=='admin'">
+						<span class="subtitle">管理员账号</span>
+						<hr class="line"/>
+						<ul id="t-admin" class="table">
+							<li class="thead">
+								<div class="th">编号</div>
+								<div class="th">账号</div>
+								<div class="th">密码</div>
+								<div class="th">操作</div>
+							</li>
+							<li id="f-admin" class="tr">
+								<div class="td"></div>
+								<div class="td">
+									<input id="account-admin" type="text" placeholder="请输入账号"/>
+								</div>
+								<div class="td">
+									<input id="password-admin" type="password" placeholder="请输入密码"/>
+								</div>
+								<div class="td">
+									<button id="create-admin">创建</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="teacher" th:if="${menu}=='teacher'">
+						<span class="subtitle">教师账号</span>
+						<hr class="line"/>
+						<ul id="t-teacher" class="table">
+							<li class="thead">
+								<div class="th">编号</div>
+								<div class="th">账号</div>
+								<div class="th">密码</div>
+								<div class="th">姓名</div>
+								<div class="th">学科</div>
+								<div class="th">头像</div>
+								<div class="th">手机号</div>
+								<div class="th">操作</div>
+							</li>
+							<li id="f-teacher" class="tr">
+								<div class="td"></div>
+								<div class="td">
+									<input id="account-teacher" type="text" placeholder="请输入账号"/>
+								</div>
+								<div class="td">
+									<input id="password-teacher" type="password" placeholder="请输入密码"/>
+								</div>
+								<div class="td">
+									<input id="name-teacher" type="text" placeholder="请输入姓名"/>
+								</div>
+								<div class="td">
+									<select id="subject-teacher">
+										<option value="">请选择学科</option>
+									</select>
+								</div>
+								<div class="td">
+									<div id="avatar-teacher-div" class="file">
+										<button id="avatar-button">请选择头像</button>
+										<img id="avatar-img" class="hide"/>
+									</div>
+									<input id="avatar-teacher" class="hide" type="file" accept="image/*"/>
+								</div>
+								<div class="td">
+									<input id="phone-teacher" type="tel" placeholder="请输入手机号"/>
+								</div>
+								<div class="td">
+									<button id="create-teacher">创建</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="student" th:if="${menu}=='student'">
+						<span class="subtitle">学生账号</span>
+						<hr class="line"/>
+						<ul id="t-student" class="table">
+							<li class="thead">
+								<div class="th">编号</div>
+								<div class="th">账号</div>
+								<div class="th">密码</div>
+								<div class="th">姓名</div>
+								<div class="th">操作</div>
+							</li>
+							<li id="f-student" class="tr">
+								<div class="td"></div>
+								<div class="td">
+									<input id="account-student" type="text" placeholder="请输入账号"/>
+								</div>
+								<div class="td">
+									<input id="password-student" type="password" placeholder="请输入密码"/>
+								</div>
+								<div class="td">
+									<input id="name-student" type="text" placeholder="请输入姓名"/>
+								</div>
+								<div class="td">
+									<button id="create-student">创建</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="course" th:if="${menu}=='course'">
+						<span class="subtitle">课程详情</span>
+						<hr class="line"/>
+						<ul id="t-course" class="table">
+							<li class="thead">
+								<div class="th">编号</div>
+								<div class="th">名称</div>
+								<div class="th">授课教师</div>
+								<div class="th">学生人数</div>
+								<div class="th">操作</div>
+							</li>
+							<li id="f-course" class="tr">
+								<div class="td"></div>
+								<div class="td">
+									<input type="text" placeholder="请输入名称"/>
+								</div>
+								<div class="td">
+									<div id="search-select-teacher"></div>
+								</div>
+								<div class="td">
+									<select id="student">
+										<option>请选择学生</option>
+									</select>
+								</div>
+								<div class="td">
+									<button>创建</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="material" th:if="${menu}=='material'">
+						<div class="subtitle"><span class="iconfont">&#xe69e;</span>资料列表</div>
+						<ul class="table">
+							<li class="thead">
+								<div class="th">序号</div>
+								<div class="th xl">资料名</div>
+								<div class="th">科目</div>
+								<div class="th">类别</div>
+								<div class="th l">上传时间</div>
+								<div class="th">操作</div>
+							</li>
+							<li id="f-material" class="tr">
+								<div class="td"></div>
+								<div class="td xl">
+									<input id="name-material" type="text" placeholder="请输入资料名称(选填)"/>
+								</div>
+								<div class="td">
+									<select id="subject-material">
+										<option value="">请选择科目</option>
+									</select>
+								</div>
+								<div class="td">
+									<select id="carrier-material">
+										<option value="">请选择类别</option>
+									</select>
+								</div>
+								<div class="td l">
+									<div id="questions-div">
+										<button id="questions-button">请选择题目文档</button>
+										<span id="questions-name" class="hide"></span>
+									</div>
+									<input id="questions" class="hide" type="file" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
+								</div>
+								<div class="td">
+									<button id="preview">预览</button>
+								</div>
+								<div id="loading-modal" class="modal hide">
+									<div class="popup">
+										<div class="square"></div>
+										<div class="hint">解析文档中，请稍候...</div>
+									</div>
+								</div>
+								<div id="preview-modal" class="modal hide">
+									<div class="popup">
+										<div id="page" class="A4"></div>
+										<div class="interact">
+											<div id="negative" class="btn btn-stroke">取消</div>
+											<div id="positive" class="btn btn-fill">添加</div>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
